@@ -1,6 +1,31 @@
 import { defineStore } from 'pinia'
 import { supabase } from '@/lib/supabase'
 
+const CATEGORY_SORT_KEY = 'bookreview_category_sort'
+
+const CAT_COLS = 'id,name,slug,description,created_at'
+
+function loadCategorySort() {
+  try {
+    return JSON.parse(localStorage.getItem(CATEGORY_SORT_KEY) || '{}')
+  } catch {
+    return {}
+  }
+}
+
+function saveCategorySort(map) {
+  localStorage.setItem(CATEGORY_SORT_KEY, JSON.stringify(map))
+}
+
+function applyCategorySort(categories) {
+  const orderMap = loadCategorySort()
+  return [...categories].sort((a, b) => {
+    const orderA = orderMap[a.id] ?? 999999
+    const orderB = orderMap[b.id] ?? 999999
+    return orderA - orderB
+  })
+}
+
 export const useCategoriesStore = defineStore('categories', {
   state: () => ({
     items: [],
@@ -9,7 +34,7 @@ export const useCategoriesStore = defineStore('categories', {
   }),
 
   getters: {
-    sorted: (state) => [...state.items].sort((a, b) => a.sort_order - b.sort_order),
+    sorted: (state) => applyCategorySort(state.items),
     count: (state) => state.items.length
   },
 
@@ -20,8 +45,8 @@ export const useCategoriesStore = defineStore('categories', {
       try {
         const { data, error } = await supabase
           .from('categories')
-          .select('*')
-          .order('sort_order', { ascending: true })
+          .select(CAT_COLS)
+          .order('created_at', { ascending: true })
         if (error) throw error
         this.items = data || []
         this.loaded = true
@@ -34,10 +59,16 @@ export const useCategoriesStore = defineStore('categories', {
       const { data, error } = await supabase
         .from('categories')
         .insert(payload)
-        .select()
+        .select(CAT_COLS)
         .single()
       if (error) throw error
       this.items.push(data)
+
+      const orderMap = loadCategorySort()
+      const maxOrder = Object.values(orderMap).length
+      orderMap[data.id] = maxOrder
+      saveCategorySort(orderMap)
+
       return data
     },
 
@@ -46,7 +77,7 @@ export const useCategoriesStore = defineStore('categories', {
         .from('categories')
         .update(payload)
         .eq('id', id)
-        .select()
+        .select(CAT_COLS)
         .single()
       if (error) throw error
       const idx = this.items.findIndex((c) => c.id === id)
@@ -58,6 +89,10 @@ export const useCategoriesStore = defineStore('categories', {
       const { error } = await supabase.from('categories').delete().eq('id', id)
       if (error) throw error
       this.items = this.items.filter((c) => c.id !== id)
+
+      const orderMap = loadCategorySort()
+      delete orderMap[id]
+      saveCategorySort(orderMap)
     }
   }
 })

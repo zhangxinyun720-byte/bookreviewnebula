@@ -38,6 +38,7 @@ onMounted(load)
       <p class="hero-sub">
         {{ siteText.home.subtitle }}
       </p>
+      <p style="color: #999; font-size: 0.75rem; margin-top: 12px;">v2</p>
     </section>
 
     <CategoryFilter v-model="activeSlug" :categories="categories.sorted" />
