@@ -322,7 +322,7 @@ const persistReorder = async (nextList) => {
   margin-right: 6px;
   vertical-align: middle;
 }
-.status-dot.published { background: var(--accent); }
+.status-dot.published { background: #6ba368; }
 .status-dot.draft { background: var(--text-mute); }
 .cat-badges {
   display: flex;
@@ -341,8 +341,8 @@ const persistReorder = async (nextList) => {
   text-align: center;
   padding: 8px 12px;
   margin-bottom: 12px;
-  background: var(--accent-soft);
-  color: var(--accent);
+  background: var(--accent-soft, rgba(107,163,104,0.12));
+  color: var(--accent, #6ba368);
   border: 1px solid var(--border);
   border-radius: 8px;
   font-size: 0.85rem;

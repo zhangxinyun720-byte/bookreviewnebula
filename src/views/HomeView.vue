@@ -35,10 +35,9 @@ onMounted(load)
       <h1 class="hero-title serif">
         {{ siteText.home.title }}
       </h1>
-      <p class="hero-sub" style="color: var(--gold);">
+      <p class="hero-sub">
         {{ siteText.home.subtitle }}
       </p>
-      <p style="color: #999; font-size: 0.75rem; margin-top: 12px;">v2</p>
     </section>
 
     <CategoryFilter v-model="activeSlug" :categories="categories.sorted" />
@@ -72,7 +71,6 @@ onMounted(load)
   line-height: 1.3;
   letter-spacing: -0.01em;
 }
-.accent { color: var(--accent); font-style: italic; }
 .hero-sub {
   margin-top: 16px;
   color: var(--text-soft);

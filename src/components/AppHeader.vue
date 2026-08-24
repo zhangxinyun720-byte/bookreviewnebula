@@ -38,7 +38,7 @@ function closeMenu() {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(253, 242, 248, 0.86);
+  background: rgba(250, 248, 245, 0.86);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
