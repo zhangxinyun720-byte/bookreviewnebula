@@ -6,106 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="个人书评 — 记录每一本书的阅读感悟" />
     <title>书评 · Reading Notes</title>
-    <script type="module" crossorigin src="/assets/index-C-VDTrIx.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/vue-CSXbLSl0.js">
+    <script type="module" crossorigin src="/assets/index-DuSr6Hw0.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vue-CKVimXzf.js">
     <link rel="modulepreload" crossorigin href="/assets/supabase-Dx0atVpp.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-Cl_Rlp3O.css">
-    <style>
-      body,button,input,textarea,select{font-family:var(--font-serif) !important}
-      .dislike-btn{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;margin-top:28px;background:var(--surface);color:var(--text-mute);border:2px solid var(--border);border-radius:50%;cursor:pointer;transition:all .25s ease;padding:0}
-      .dislike-btn:hover{color:var(--danger);border-color:var(--danger);background:rgba(192,38,107,.08);transform:scale(1.1)}
-      .sheep-emoji{position:absolute;font-size:48px;z-index:9999;pointer-events:none}
-      .nebula-fixed{position:fixed;bottom:0;left:0;width:100%;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:6px 24px 10px;background:linear-gradient(to top,var(--bg) 50%,transparent);pointer-events:none}
-      .nebula-fixed .side-text{font-family:'Playfair Display',Georgia,serif;font-size:13px;color:var(--text-mute);opacity:1;letter-spacing:.03em}
-      .nebula-fixed .center svg{width:180px;height:auto;opacity:1}
-      .nebula-fixed .center{flex:1;display:flex;justify-content:center}
-      .site-footer{display:none !important}
-    </style>
+    <link rel="stylesheet" crossorigin href="/assets/index-CcTUNxJC.css">
   </head>
   <body>
     <div id="app"></div>
-    <div class="nebula-fixed">
-      <span class="side-text">©2026 Reading Notes</span>
-      <div class="center">
-        <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#ff69b4"/>
-              <stop offset="50%" stop-color="#ff1493"/>
-              <stop offset="100%" stop-color="#c71585"/>
-            </linearGradient>
-          </defs>
-          <text x="300" y="130" font-family="'Playfair Display', Georgia, serif" font-size="100" font-weight="900" text-anchor="middle" letter-spacing="0.05em" fill="url(#pinkGrad)">Nebula</text>
-        </svg>
-      </div>
-      <span class="side-text">Built with Vue &amp; Supabase</span>
-    </div>
-    <script>
-        var dislikeSvg='<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>';
-        var dislikeSvgFilled='<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>';
-        var sheepCount=0;
-        function addDislike(){
-          var possibleReviews=document.querySelectorAll('[class*="review"]');
-          possibleReviews.forEach(function(el){
-            if(el.classList.contains('review-heading')||el.classList.contains('review-body'))return;
-            if(el.classList.contains('dislike-btn'))return;
-            if(!el.className||typeof el.className!=='string')return;
-            var classes=el.className.split(' ');
-            var hasReview=classes.some(function(c){return c==='review'});
-            if(!hasReview)return;
-            if(el.querySelector('.dislike-btn'))return;
-            var btn=document.createElement('button');
-            btn.className='dislike-btn';
-            btn.innerHTML=dislikeSvg;
-            btn.addEventListener('click',function(){
-              var isActive=btn.classList.contains('active');
-              btn.classList.toggle('active');
-              btn.innerHTML=btn.classList.contains('active')?dislikeSvgFilled:dislikeSvg;
-              if(isActive)return;
-              sheepCount++;
-              if(sheepCount>=10){
-                document.body.innerHTML='<div style="position:fixed;top:0;left:0;width:100%;height:100vh;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:99999"><h1 class="hero-title serif" style="font-size:clamp(1.8rem,4vw,2.6rem);font-weight:600;line-height:1.3;letter-spacing:-.01em;color:var(--accent)">这么不满意？那你走</h1></div>';
-                return;
-              }
-              var sheep=document.createElement('div');
-              sheep.className='sheep-emoji';
-              sheep.textContent='🐑';
-              sheep.style.left=Math.random()*90+'vw';
-              document.body.appendChild(sheep);
-              var sheepH=48;
-              var startY=window.scrollY-60;
-              var groundY=window.scrollY+window.innerHeight-sheepH;
-              var offsetY=0;
-              var vy=0;
-              var gravity=0.5;
-              var bounceCount=0;
-              var maxBounces=2;
-              var restitution=0.45;
-              function animate(){
-                vy+=gravity;
-                offsetY+=vy;
-                if(offsetY>=groundY-startY){
-                  offsetY=groundY-startY;
-                  if(bounceCount<maxBounces&&Math.abs(vy)>1){
-                    vy=-vy*restitution;
-                    bounceCount++;
-                  }else{
-                    vy=0;
-                    bounceCount=maxBounces;
-                  }
-                }
-                sheep.style.top=(startY+offsetY)+'px';
-                if(bounceCount<maxBounces||Math.abs(vy)>0.5){
-                  requestAnimationFrame(animate);
-                }
-              }
-              requestAnimationFrame(animate);
-            });
-            el.appendChild(btn);
-          });
-        }
-        new MutationObserver(addDislike).observe(document.body,{childList:true,subtree:true});
-        addDislike();
-      </script>
   </body>
 </html>

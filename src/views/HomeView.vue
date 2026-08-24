@@ -33,9 +33,9 @@ onMounted(load)
     <section class="hero">
       <p class="hero-eyebrow muted">{{ siteText.home.eyebrow }}</p>
       <h1 class="hero-title serif">
-        {{ siteText.home.title }}<span class="accent">{{ siteText.home.accent }}</span>
+        {{ siteText.home.title }}
       </h1>
-      <p class="hero-sub">
+      <p class="hero-sub" style="color: var(--gold);">
         {{ siteText.home.subtitle }}
       </p>
       <p style="color: #999; font-size: 0.75rem; margin-top: 12px;">v2</p>

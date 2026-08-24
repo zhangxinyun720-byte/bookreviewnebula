@@ -19,9 +19,9 @@ export const siteText = {
 
   home: {
     eyebrow: "Nebula's book review · 一支秃笔",
-    title: '知不可乎骤得',
-    accent: '吾将上下而求索',
-    subtitle: '这里记录我读过的书——与你同行亦是我最大的荣幸',
+    title: '梦境中人是很可爱的',
+    accent: '',
+    subtitle: '',
     loading: '正在加载书架…',
     empty: '这个分类下还没有书籍。',
   },
